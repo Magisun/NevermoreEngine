@@ -7,7 +7,7 @@ function lib.BoxMuller()
 	-- Box-Muller Transform
 	-- Samples a normal distribution of mean=0, stddev=1 using a uniform random source
 	
-	return math.sqrt(-2 * math.log(math.random())) * math.cos(2 * math.pi * math.random()) / 2
+	return math.sqrt(-2 * math.log(math.random())) * math.cos(2 * math.pi * math.random())
 end
 
 function lib.UnboundedNormalDistribution(Average, StdDeviation)
