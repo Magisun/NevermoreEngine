@@ -24,4 +24,28 @@ function lib.NormalDistribution(Average, StdDeviation, HardMin, HardMax)
 	return math.min(HardMax, math.max(HardMin, Average + lib.BoxMuller() * StdDeviation))
 end
 
+--- Discrete distributions
+
+function lib.Bernoulli(Probability)
+	-- Samples from a Bernoulli discrete distribution
+	-- Output is true/false
+	-- @param Probability, chance a sample will be 'true'
+	
+	return math.random() < Probability
+end
+
+function lib.Binomial(Probability, Trials)
+	-- Samples from a binomial discrete distribution
+	-- Note: Should not be used to gather large samples
+	-- @param Probability, chance of a single trial 
+	-- @param Trials, number of trials
+	
+	local val = 0
+	for i=1, Trials do
+		-- Not calling lib.Bernoulli because function calls would make this even slower
+		val = val + (math.random() < Probability and 1 or 0)
+	end
+	return val
+end
+
 return lib
