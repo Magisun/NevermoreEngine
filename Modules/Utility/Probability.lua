@@ -90,7 +90,7 @@ function lib.Gamma(K, Scale)
 			v = v^3
 			
 			u = random()
-			if u < 1 - 0.0331*x^4 or log(u) < 0.5*x^2 + d*(1 - v + log(v)) then
+			if u < 1 - 0.0331*x^4 or log(u) < 0.5*x^2 + D*(1 - v + log(v)) then
 				val = D*v
 				break
 			end
