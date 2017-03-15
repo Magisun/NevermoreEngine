@@ -3,6 +3,8 @@
 
 local lib = {}
 
+-- Continuous distributions
+
 local function BoxMuller()
 	-- Box-Muller Transform
 	-- Samples a normal distribution of mean=0, stddev=1 using a uniform random source
