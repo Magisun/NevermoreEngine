@@ -3,7 +3,7 @@
 
 local lib = {}
 
-function lib.BoxMuller()
+local function BoxMuller()
 	-- Box-Muller Transform
 	-- Samples a normal distribution of mean=0, stddev=1 using a uniform random source
 	
@@ -14,14 +14,14 @@ function lib.UnboundedNormalDistribution(Average, StdDeviation)
 	-- Samples from a normal distribution with specified mean, and standard deviation
 	-- Note: Has no hard cutoffs, see NormalDistribution(...)
 	
-	return Average + lib.BoxMuller() * StdDeviation
+	return Average + BoxMuller() * StdDeviation
 end
 
 function lib.NormalDistribution(Average, StdDeviation, HardMin, HardMax)
 	-- Samples from a normal distribution with specified mean, standard deviation, and cutoffs
 	-- Output is bounded by HardMin and HardMax
 	
-	return math.min(HardMax, math.max(HardMin, Average + lib.BoxMuller() * StdDeviation))
+	return math.min(HardMax, math.max(HardMin, Average + BoxMuller() * StdDeviation))
 end
 
 --- Discrete distributions
