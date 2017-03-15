@@ -3,13 +3,15 @@
 
 local lib = {}
 
+local log, exp, sqrt, min, max, cos, random = math.log, math.exp, math.sqrt, math.min, math.max, math.cos, math.random
+
 -- Continuous distributions
 
 local function BoxMuller()
 	-- Box-Muller Transform
 	-- Samples a normal distribution of mean=0, stddev=1 using a uniform random source
 	
-	return math.sqrt(-2 * math.log(math.random())) * math.cos(2 * math.pi * math.random())
+	return sqrt(-2 * log(random())) * cos(2 * math.pi * random())
 end
 
 function lib.UnboundedNormalDistribution(Average, StdDeviation)
@@ -23,7 +25,7 @@ function lib.NormalDistribution(Average, StdDeviation, HardMin, HardMax)
 	-- Samples from a normal distribution with specified mean, standard deviation, and cutoffs
 	-- Output is bounded by HardMin and HardMax
 	
-	return math.min(HardMax, math.max(HardMin, Average + BoxMuller() * StdDeviation))
+	return min(HardMax, max(HardMin, Average + BoxMuller() * StdDeviation))
 end
 
 function lib.GammaDistribution(K, Scale)
@@ -35,26 +37,26 @@ function lib.GammaDistribution(K, Scale)
 	if K == 0 then
 		return 0
 	elseif K == 1 then
-		return -math.log(math.random())
+		return -log(random())
 	elseif K < 1 then
 		-- Ahrens-Dieter acceptance–rejection method, doi:10.1145/358315.358390
 		val = 0
 		
 		while true do
-			u = math.random()
-			v = math.random()
-			w = math.random()
+			u = random()
+			v = random()
+			w = random()
 			
-			if u <= math.exp(1)/(math.exp(1) + K) then
+			if u <= exp(1)/(exp(1) + K) then
 				val = v^(1/K)
 				
-				if w * val^(K-1) <= val^(k-1) * math.exp(-val) then
+				if w * val^(K-1) <= val^(k-1) * exp(-val) then
 					break
 				end
 			else
-				val = 1 - math.log(v)
+				val = 1 - log(v)
 				
-				if w * math.exp(-val) <= val^(k-1) * math.exp(-val) then
+				if w * exp(-val) <= val^(k-1) * exp(-val) then
 					break
 				end
 			end
@@ -64,7 +66,7 @@ function lib.GammaDistribution(K, Scale)
 	elseif K > 1 then
 		-- Marsaglia-Tsang transformation-rejection method, doi:10.1145/358407.358414
 		D = K - 1/3
-		C = 1/math.sqrt(9*D)
+		C = 1/sqrt(9*D)
 		val = 0
 		
 		while true do
@@ -75,8 +77,8 @@ function lib.GammaDistribution(K, Scale)
 			end
 			v = v^3
 			
-			u = math.random()
-			if u < 1 - 0.0331*x^4 or math.log(u) < 0.5*x^2 + d*(1 - v + math.log(v)) then
+			u = random()
+			if u < 1 - 0.0331*x^4 or log(u) < 0.5*x^2 + d*(1 - v + log(v)) then
 				val = D*v
 				break
 			end
@@ -93,7 +95,7 @@ function lib.Bernoulli(Probability)
 	-- Output is true/false
 	-- @param Probability, chance a sample will be 'true'
 	
-	return math.random() < Probability
+	return random() < Probability
 end
 
 function lib.Binomial(Probability, Trials)
@@ -105,7 +107,7 @@ function lib.Binomial(Probability, Trials)
 	local val = 0
 	for i=1, Trials do
 		-- Not calling lib.Bernoulli because function calls would make this even slower
-		val = val + (math.random() < Probability and 1 or 0)
+		val = val + (random() < Probability and 1 or 0)
 	end
 	return val
 end
