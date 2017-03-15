@@ -22,7 +22,7 @@ function lib.UnboundedNormal(Average, StdDeviation)
 end
 
 -- Deprecated March 3rd, 2017
-lib.UnboundedNormalDistribution(...)
+lib.UnboundedNormalDistribution = function(...)
 	print("Warning: UnboundedNormalDistribution is deprecated in favor of UnboundedNormal")
 	return lib.UnboundedNormal(...)
 end
