@@ -100,6 +100,18 @@ function lib.Gamma(K, Scale)
 	end
 end
 
+function lib.Beta(Alpha, Beta)
+	-- Samples from a beta distribution with specified alpha and beta parameters
+	
+	assert(Alpha > 0, "Alpha must be greater than 0.")
+	assert(Beta > 0, "Beta must be greater than 0.")
+	
+	x = lib.Gamma(Alpha, 1)
+	y = lib.Gamma(Beta, 1)
+	
+	return x / (x + y)
+end
+
 --- Discrete distributions
 
 function lib.Bernoulli(Probability)
