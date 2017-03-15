@@ -106,8 +106,7 @@ function lib.Binomial(Probability, Trials)
 	
 	local val = 0
 	for i=1, Trials do
-		-- Not calling lib.Bernoulli because function calls would make this even slower
-		val = val + (random() < Probability and 1 or 0)
+		val = val + (lib.Bernoulli(Probability) and 1 or 0)
 	end
 	return val
 end
