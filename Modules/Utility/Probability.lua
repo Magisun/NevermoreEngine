@@ -62,13 +62,13 @@ function lib.Gamma(K, Scale)
 			if u <= exp(1)/(exp(1) + K) then
 				val = v^(1/K)
 				
-				if w * val^(K-1) <= val^(k-1) * exp(-val) then
+				if w * val^(K-1) <= val^(K-1) * exp(-val) then
 					break
 				end
 			else
 				val = 1 - log(v)
 				
-				if w * exp(-val) <= val^(k-1) * exp(-val) then
+				if w * exp(-val) <= val^(K-1) * exp(-val) then
 					break
 				end
 			end
