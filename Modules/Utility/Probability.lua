@@ -112,6 +112,14 @@ function lib.Beta(Alpha, Beta)
 	return x / (x + y)
 end
 
+function lib.Exponential(Lambda)
+	-- Samples from an exponential distribution with specified lambda parameter
+	
+	assert(Lambda > 0, "Lambda must be greater than 0.")
+	
+	return -log(random()) / Lambda
+end
+
 --- Discrete distributions
 
 function lib.Bernoulli(Probability)
