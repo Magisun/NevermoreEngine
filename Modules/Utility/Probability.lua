@@ -14,21 +14,33 @@ local function BoxMuller()
 	return sqrt(-2 * log(random())) * cos(2 * math.pi * random())
 end
 
-function lib.UnboundedNormalDistribution(Average, StdDeviation)
+function lib.UnboundedNormal(Average, StdDeviation)
 	-- Samples from a normal distribution with specified mean, and standard deviation
 	-- Note: Has no hard cutoffs, see NormalDistribution(...)
 	
 	return Average + BoxMuller() * StdDeviation
 end
 
-function lib.NormalDistribution(Average, StdDeviation, HardMin, HardMax)
+-- Deprecated March 3rd, 2017
+lib.UnboundedNormalDistribution(...)
+	print("Warning: UnboundedNormalDistribution is deprecated in favor of UnboundedNormal")
+	return lib.UnboundedNormal(...)
+end
+
+function lib.Normal(Average, StdDeviation, HardMin, HardMax)
 	-- Samples from a normal distribution with specified mean, standard deviation, and cutoffs
 	-- Output is bounded by HardMin and HardMax
 	
 	return min(HardMax, max(HardMin, Average + BoxMuller() * StdDeviation))
 end
 
-function lib.GammaDistribution(K, Scale)
+-- Deprecated March 3rd, 2017
+lib.NormalDistribution = function(...)
+	print("Warning: NormalDistribution is deprecated in favor of Normal")
+	return lib.Normal(...)
+end
+
+function lib.Gamma(K, Scale)
 	-- Samples from a gamma distribution with specified alpha/k value and theta (scale) value
 	-- Note: To use alpha+beta parameters, theta=1/beta
 	
